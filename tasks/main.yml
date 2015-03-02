@@ -64,4 +64,7 @@
   tags:
       - nodebrew
 
-
+- name: check installed
+  command: sudo -c "su - root -c 'node -v'"
+  tags:
+      - nodebrew
