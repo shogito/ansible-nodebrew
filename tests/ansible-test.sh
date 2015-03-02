@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /ansible-rbenv
+cd /ansible-nodebrew
 
 cat <<EOF > ansible.cfg
 [defaults]

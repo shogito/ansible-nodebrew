@@ -1,1 +1,1 @@
-cd /ansible-rbenv ; /opt/ansible/ansible/bin/ansible-playbook /ansible-rbenv/tests/test.yml -i /ansible-rbenv/tests/inventory -c local --skip-tags "ruby check" | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+cd /ansible-nodebrew ; /opt/ansible/ansible/bin/ansible-playbook /ansible-rbenv/tests/test.yml -i /ansible-rbenv/tests/inventory -c local --skip-tags "ruby check" | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
