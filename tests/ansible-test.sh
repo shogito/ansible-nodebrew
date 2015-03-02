@@ -6,5 +6,5 @@ cat <<EOF > ansible.cfg
 roles_path = ../
 EOF
 
-/opt/ansible/ansible/bin/ansible-playbook /ansible-rbenv/tests/test.yml -i /ansible-rbenv/tests/inventory -c local --skip-tags "ruby check"
+/opt/ansible/ansible/bin/ansible-playbook /ansible-nodebrew/tests/test.yml -i /ansible-nodebrew/tests/inventory -c local --skip-tags "node check"
 
