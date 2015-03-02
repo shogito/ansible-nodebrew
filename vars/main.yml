@@ -1,0 +1,4 @@
+packages:
+  - pkg: git
+  - pkg: curl
+  - pkg: perl

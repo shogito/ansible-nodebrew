@@ -1,0 +1,67 @@
+- include: prereq-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+  tags:
+      - nodebrew
+      - redhat
+
+- include: prereq-Debian.yml
+  when: ansible_os_family == 'Debian'
+  tags:
+      - nodebrew
+      - debian
+
+- name: nodebrew install 
+  shell: curl -L https://raw.githubusercontent.com/hokaccha/nodebrew/master/nodebrew | perl - setup
+  tags:
+      - nodebrew
+
+
+- name: create environ dir
+  file: path={{ ANSIBLE_NODEBREW_NODEBRWE_USER_HOME }}/profile.d state=directory mode=0755
+  sudo_user: "{{ ANSIBLE_NODEBREW_NODEBRWE_USER }}"
+  tags:
+      - nodebrew
+
+- name: add environ scrip
+  copy: src=../files/nodebrew.sh dest={{ ANSIBLE_NODEBREW_NODEBRWE_USER_HOME }}/profile.d/ mode=0755
+  sudo_user: "{{ ANSIBLE_NODEBREW_NODEBRWE_USER }}"
+  tags:
+      - nodebrew
+
+- name: check bash
+  shell: "[ -x $(which bash) ] && echo 'Found' || echo ''"
+  register: executable_bash
+  changed_when: false 
+  tags:
+      - nodebrew
+
+- name: add bash environ
+  include: bash-env.yml
+  when: executable_bash.stdout
+  tags:
+      - nodebrew
+
+- name: check zsh
+  shell: "[ -x $(which zsh) ] && echo 'Found' || echo ''"
+  register: executable_zsh
+  changed_when: false 
+  tags:
+      - nodebrew
+
+- name: add zsh environ
+  include: zsh-env.yml
+  when: executable_zsh.stdout
+  tags:
+      - nodebrew
+
+- name: install node
+  command: $HOME/.nodebrew/current/bin/nodebrew install-binary {{ ANSIBLE_NODEBREW_NODE_VERSION }}
+  tags:
+      - nodebrew
+
+- name: use node
+  command: $HOME/.nodebrew/current/bin/nodebrew use {{ ANSIBLE_NODEBREW_NODE_VERSION }}
+  tags:
+      - nodebrew
+
+

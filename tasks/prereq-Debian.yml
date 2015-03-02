@@ -1,0 +1,13 @@
+- name: apt キャッシュアップデート
+  apt: update_cache=yes
+
+- name: Install prereq パッケージ
+  apt: pkg="{{ item }}" state=present
+  with_items:
+    - git
+    - curl
+    - perl
+
+- name: Install developmentパッケージ
+  apt: pkg="{{ item }}" state=present
+  with_items:

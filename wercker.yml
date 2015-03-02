@@ -1,0 +1,52 @@
+box: wercker-labs/docker
+no-response-timeout: 15
+build:
+
+  steps:
+    - script:
+        name: install ansible to local
+        code: sudo apt-get update ; sudo apt-get install python-pip -y ; sudo pip install ansible
+
+    - script: 
+        name: install docker-enter
+        code: docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
+
+    - script:
+        name: run docker container
+        code: docker run -v `pwd`:/ansible-nodebrew -i -d --name=centos_ansible ansible/centos7-ansible /bin/bash
+
+    - script:
+        name: run syntax check
+        code: |
+          echo /ansible-nodebrew/tests/syntax-check.sh | /usr/local/bin/docker-enter centos_ansible
+
+    - script:
+        name: run system test
+        code: |
+          echo /ansible-nodebrew/tests/ansible-test.sh | /usr/local/bin/docker-enter centos_ansible
+   
+    - script:
+        name: run idempotent test 
+        code: |
+          echo /ansible-nodebrew/tests/ansible-idempotent-test.sh | /usr/local/bin/docker-enter centos_ansible
+
+    - script:
+        name: run docker container
+        code: docker run -v `pwd`:/ansible-nodebrew -i -d --name=ubuntu_ansible ansible/ubuntu14.04-ansible /bin/bash
+
+    - script:
+        name: run system test
+        code: |
+          echo /ansible-nodebrew/tests/ansible-test.sh | /usr/local/bin/docker-enter ubuntu_ansible
+ 
+    - script:
+        name: run idempotent test
+        code: |
+          echo /ansible-nodebrew/tests/ansible-idempotent-test.sh | /usr/local/bin/docker-enter ubuntu_ansible
+
+  after-steps:
+    - wantedly/pretty-slack-notify:
+        webhook_url: $SLACK_WEBHOOK_URL
+        channel: wercker
+        username: werko
+        
