@@ -17,7 +17,7 @@
 
 
 - name: create environ dir
-  file: path={{ ANSIBLE_NODEBREW_NODEBRWE_USER_HOME }}/profile.d state=directory mode=0755
+  file: path={{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/profile.d state=directory mode=0755
   sudo_user: "{{ ANSIBLE_NODEBREW_NODEBRWE_USER }}"
   tags:
       - nodebrew
