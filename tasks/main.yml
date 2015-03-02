@@ -68,3 +68,4 @@
   command: sudo -c "su - root -c 'node -v'"
   tags:
       - nodebrew
+      - node check
