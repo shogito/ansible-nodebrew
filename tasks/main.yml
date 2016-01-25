@@ -54,8 +54,13 @@
   tags:
       - nodebrew
 
+- name: check installed node
+  command: $HOME/.nodebrew/current/bin/nodebrew list | grep -v "current" | grep {{ ANSIBLE_NODEBREW_NODE_VERSION }}
+  register: result
+
 - name: install node
   command: $HOME/.nodebrew/current/bin/nodebrew install-binary {{ ANSIBLE_NODEBREW_NODE_VERSION }}
+  when: result.rc != 0
   tags:
       - nodebrew
 
