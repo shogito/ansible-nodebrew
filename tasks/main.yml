@@ -70,7 +70,7 @@
       - nodebrew
 
 - name: check installed
-  command: sudo -c "su - root -c 'node -v'"
+  command: node -v
   tags:
       - nodebrew
       - node check
