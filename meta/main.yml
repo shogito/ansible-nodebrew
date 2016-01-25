@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: shogito
-  description: install rbenv
+  description: install nodebrew
   company: nextone.inc
   # Some suggested licenses:
   # - BSD (default)
