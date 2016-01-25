@@ -57,7 +57,7 @@
 - name: check installed node
   command: $HOME/.nodebrew/current/bin/nodebrew list | grep -v "current" | grep {{ ANSIBLE_NODEBREW_NODE_VERSION }}
   register: result
-  failed_when: result.rc not in [0, 1]
+  failed_when: result.rc not in [0,1]
 
 - name: install node
   command: bash -c "$HOME/.nodebrew/current/bin/nodebrew install-binary {{ ANSIBLE_NODEBREW_NODE_VERSION }}"
