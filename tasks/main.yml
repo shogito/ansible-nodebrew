@@ -60,13 +60,13 @@
   failed_when: result.rc not in [0,1]
 
 - name: install node
-  command: {{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/.nodebrew/current/bin/nodebrew install-binary {{ ANSIBLE_NODEBREW_NODE_VERSION }}
+  command: bash -c "{{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/.nodebrew/current/bin/nodebrew install-binary {{ ANSIBLE_NODEBREW_NODE_VERSION }}"
   when: result.rc != 0
   tags:
       - nodebrew
 
 - name: use node
-  command: {{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/.nodebrew/current/bin/nodebrew use {{ ANSIBLE_NODEBREW_NODE_VERSION }}
+  command: bash -c "{{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/.nodebrew/current/bin/nodebrew use {{ ANSIBLE_NODEBREW_NODE_VERSION }}"
   tags:
       - nodebrew
 
