@@ -71,7 +71,7 @@
       - nodebrew
 
 - name: check installed
-  command: node -v
+  command: bash -c "node -v"
   tags:
       - nodebrew
       - node check
