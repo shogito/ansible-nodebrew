@@ -1,6 +1,6 @@
 # Ansible Role: ansible-nodebrew
 
-[Build Status]
+[![Build Status](https://travis-ci.org/shogito/ansible-nodebrew.svg?branch=master)](https://travis-ci.org/shogito/ansible-nodebrew)
 [wercker status]
 ### 要求
 none
