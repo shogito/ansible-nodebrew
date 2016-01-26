@@ -57,7 +57,6 @@
 - name: check installed node
   command: bash -c "{{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/.nodebrew/current/bin/nodebrew list | grep -v current | grep {{ ANSIBLE_NODEBREW_NODE_VERSION }}"
   register: result
-  failed_when: result.rc not in [0,1]
 
 - name: install node
   command: bash -c "{{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/.nodebrew/current/bin/nodebrew install-binary {{ ANSIBLE_NODEBREW_NODE_VERSION }}"
@@ -71,7 +70,7 @@
       - nodebrew
 
 - name: check installed
-  command: bash -c "node -v"
+  command: bash -c "{{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/.nodebrew/current/bin/node -v"
   tags:
       - nodebrew
       - node check
