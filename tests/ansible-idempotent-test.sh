@@ -1,1 +1,1 @@
-cd /ansible-nodebrew ; /opt/ansible/ansible/bin/ansible-playbook /ansible-nodebrew/tests/test.yml -i /ansible-nodebrew/tests/inventory -c local --skip-tags "node check" | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+cd /ansible-nodebrew ; /opt/ansible/ansible/bin/ansible-playbook /ansible-nodebrew/tests/test.yml -i /ansible-nodebrew/tests/inventory -c local --skip-tags "node check" 
