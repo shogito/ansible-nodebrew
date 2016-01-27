@@ -10,11 +10,17 @@
       - nodebrew
       - debian
 
+- name: check installed nodebrew
+  shell: nodebrew 
+  register: result
+  failed_when: rsult.rc not in [0,1]
+  changed_when: false
+
 - name: nodebrew install 
   shell: curl -L https://raw.githubusercontent.com/hokaccha/nodebrew/master/nodebrew | perl - setup
+  when: result.rc != 0
   tags:
       - nodebrew
-
 
 - name: create environ dir
   file: path={{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/profile.d state=directory mode=0755
@@ -56,6 +62,7 @@
 
 - name: check installed node
   command: bash -c "{{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/.nodebrew/current/bin/nodebrew list | grep -v current | grep {{ ANSIBLE_NODEBREW_NODE_VERSION }}"
+  changed_when: false 
   register: result
   failed_when: result.rc not in [0,1]
 
@@ -67,11 +74,12 @@
 
 - name: use node
   command: bash -c "{{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/.nodebrew/current/bin/nodebrew use {{ ANSIBLE_NODEBREW_NODE_VERSION }}"
+  changed_when: false 
   tags:
       - nodebrew
 
 - name: check installed
   command: bash -c "{{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/.nodebrew/current/bin/node -v"
+  changed_when: false 
   tags:
       - nodebrew
-      - node check
