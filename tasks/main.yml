@@ -17,8 +17,9 @@
   changed_when: false
 
 - name: nodebrew install 
-  shell: curl -L https://raw.githubusercontent.com/hokaccha/nodebrew/master/nodebrew | perl - setup
+  command: bash -c "curl -L https://raw.githubusercontent.com/hokaccha/nodebrew/master/nodebrew | perl - setup"
   when: installed_nodebrew.rc == 127
+  changed_when: false
   tags:
       - nodebrew
 
