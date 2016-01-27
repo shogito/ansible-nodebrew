@@ -18,7 +18,7 @@
 
 - name: nodebrew install 
   shell: curl -L https://raw.githubusercontent.com/hokaccha/nodebrew/master/nodebrew | perl - setup
-  when: result.rc != 0
+  when: result.rc == 127
   tags:
       - nodebrew
 
