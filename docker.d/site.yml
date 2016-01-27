@@ -1,0 +1,16 @@
+- hosts: docker_hosts
+  become: yes
+  remote_user: docker
+  tasks:
+    - name: deploy centos container
+      docker: image=centos:centos67 name=test tty=yes
+
+- hosts: containers
+  connection: docker
+  remote_user: root
+  vars:
+      - ANSIBLE_NODEBREW_NODEBREW_USER: root
+      - ANSIBLE_NODEBREW_NODEBREW_USER_HOME: /root
+      - ANSIBLE_NODEBREW_NODE_VERSION: 0.12.9
+  roles:
+      - ../../ansible-nodebrew

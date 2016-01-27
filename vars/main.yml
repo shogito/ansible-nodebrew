@@ -2,3 +2,5 @@ packages:
   - pkg: git
   - pkg: curl
   - pkg: perl
+  - pkg: which
+  - pkg: tar
