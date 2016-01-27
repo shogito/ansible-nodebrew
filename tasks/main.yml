@@ -13,7 +13,7 @@
 - name: check installed nodebrew
   shell: nodebrew 
   register: result
-  failed_when: rsult.rc not in [0,1]
+  failed_when: result.rc not in [0,1]
   changed_when: false
 
 - name: nodebrew install 
