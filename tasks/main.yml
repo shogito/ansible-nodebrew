@@ -12,13 +12,13 @@
 
 - name: check installed nodebrew
   shell: nodebrew 
-  register: result
-  failed_when: result.rc not in [0,127]
+  register: installed_nodebrew
+  failed_when: installed_nodebrew.rc not in [0,127]
   changed_when: false
 
 - name: nodebrew install 
   shell: curl -L https://raw.githubusercontent.com/hokaccha/nodebrew/master/nodebrew | perl - setup
-  when: result.rc == 127
+  when: installed_nodebrew.rc == 127
   tags:
       - nodebrew
 
