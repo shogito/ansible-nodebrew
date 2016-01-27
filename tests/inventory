@@ -1,7 +1,1 @@
 127.0.0.1
-
-[docker_host]
-default
-
-[container]
-test

@@ -3,7 +3,7 @@
   remote_user: docker
   tasks:
     - name: deploy centos container
-      docker: image=centos:centos67 name=test tty=yes
+      docker: image=centos:centos6.7 name=test tty=yes
 
 - hosts: containers
   connection: docker
