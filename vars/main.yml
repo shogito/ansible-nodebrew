@@ -4,3 +4,4 @@ packages:
   - pkg: perl
   - pkg: which
   - pkg: tar
+  - pkg: libselinux-python
