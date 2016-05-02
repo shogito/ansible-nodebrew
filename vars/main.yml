@@ -5,3 +5,4 @@ packages:
   - pkg: which
   - pkg: tar
   - pkg: libselinux-python
+  - pkg: gcc-c++

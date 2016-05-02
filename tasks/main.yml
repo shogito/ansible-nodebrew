@@ -16,19 +16,24 @@
 
 - name: nodebrew install 
   shell: curl -L https://raw.githubusercontent.com/hokaccha/nodebrew/master/nodebrew | perl - setup
-  sudo_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become: yes
+  environment:
+      HOME: "{{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}"
   tags:
       - nodebrew
 
 - name: create environ dir
   file: path={{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/profile.d state=directory mode=0755
-  sudo_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become: yes
   tags:
       - nodebrew
 
 - name: add environ scrip
   copy: src=../files/nodebrew.sh dest={{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/profile.d/ mode=0755
-  sudo_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become: yes
   tags:
       - nodebrew
 
@@ -36,14 +41,16 @@
   shell: "[ -x $(which bash) ] && echo 'Found' || echo ''"
   register: executable_bash
   changed_when: false 
-  sudo_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become: yes
   tags:
       - nodebrew
 
 - name: add bash environ
   include: bash-env.yml
   when: executable_bash.stdout
-  sudo_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become: yes
   tags:
       - nodebrew
 
@@ -51,39 +58,45 @@
   shell: "[ -x $(which zsh) ] && echo 'Found' || echo ''"
   register: executable_zsh
   changed_when: false 
-  sudo_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become: yes
   tags:
       - nodebrew
 
 - name: add zsh environ
   include: zsh-env.yml
   when: executable_zsh.stdout
-  sudo_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become: yes
   tags:
       - nodebrew
 
 - name: check installed node
   command: bash -c "{{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/.nodebrew/current/bin/nodebrew list | grep -v current | grep {{ ANSIBLE_NODEBREW_NODE_VERSION }}"
   register: result
-  sudo_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become: yes
   failed_when: result.rc not in [0,1]
 
 - name: install node
   command: bash -c "{{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/.nodebrew/current/bin/nodebrew install-binary {{ ANSIBLE_NODEBREW_NODE_VERSION }}"
   when: result.rc != 0
-  sudo_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become: yes
   tags:
       - nodebrew
 
 - name: use node
   command: bash -c "{{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/.nodebrew/current/bin/nodebrew use {{ ANSIBLE_NODEBREW_NODE_VERSION }}"
-  sudo_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become: yes
   tags:
       - nodebrew
 
 - name: check installed
   command: bash -c "{{ ANSIBLE_NODEBREW_NODEBREW_USER_HOME }}/.nodebrew/current/bin/node -v"
-  sudo_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become_user: "{{ ANSIBLE_NODEBREW_NODEBREW_USER }}"
+  become: yes
   tags:
       - nodebrew
       - node check
